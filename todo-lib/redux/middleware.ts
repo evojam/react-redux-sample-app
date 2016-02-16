@@ -1,0 +1,1 @@
+export { logger } from './middleware/logger';

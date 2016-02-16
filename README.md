@@ -1,2 +1,8 @@
-# react-redux-sample-app
-ReactJS &amp; Redux - sample application
+# ReactJS playground
+
+Run (requires globally installed npm & gulp):
+
+ - `npm install`
+ - `gulp tsd`
+ - `gulp ts-build`
+ - `gulp serve`
