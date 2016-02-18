@@ -2,7 +2,7 @@
   "name": "react-playground",
   "version": "0.1.0",
   "description": "ReactJS (TS) TODO LIST",
-  "author": "JS",
+  "author": "Jakub Strojewski <kuba@evojam.com>",
   "license": "WTFPL",
   "dependencies": {
     "monet": "0.8.7",
@@ -10,7 +10,7 @@
     "react-dom": "0.14.7",
     "redux": "3.3.1",
     "reflect-metadata": "0.1.3",
-    "systemjs": "0.19.21"
+    "systemjs": "0.19.22"
   },
   "devDependencies": {
     "gulp": "3.9.1",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ulfryk/react-playground"
+    "url": "https://github.com/evojam/react-redux-sample-app"
   },
   "engines": {
     "node": ">=4",
