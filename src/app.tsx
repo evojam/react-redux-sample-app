@@ -5,7 +5,7 @@ import { Store, IUnsubscribe } from 'redux';
 import { IAppState } from '../todo-lib/redux/core';
 import { ITodo, ITodoList } from '../todo-lib/dto';
 import { FilterType } from '../todo-lib/filters';
-import { TodoListHeader, FilterLink } from './components';
+import { TodoListHeader, FilterLink, TodoList } from './components';
 
 interface IAppComponentProps {
     store: Store<IAppState>
@@ -47,7 +47,7 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
                         {this.lists.map(list => (
                             <li className={this.listClassName(list, this.currentId)} key={list.id}>
                                 <TodoListHeader todoList={list} />
-                                {list.id === this.currentId ? (
+                                {list.id !== this.currentId ? (
                                     <ul className="todo-list">
                                         {list.todos.map(todo => (
                                         <li className={this.todoClassName(todo)} key={todo.id}>
@@ -64,6 +64,7 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
                                             <FilterLink filterType="Completed"/>
                                         </filters>
                                         <p> current filter is {this.filter}</p>
+                                        <TodoList todos={list.todos} filter={this.filter} />
                                     </div>
                                     )}
                             </li>
