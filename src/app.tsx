@@ -5,7 +5,7 @@ import { Store, IUnsubscribe } from 'redux';
 import { IAppState } from '../todo-lib/redux/core';
 import { ITodo, ITodoList } from '../todo-lib/dto';
 import { FilterType } from '../todo-lib/filters';
-import { TodoListHeader, FilterLink, TodoList } from './components';
+import { TodoListHeader, FilterLink, TodoList, AddItem } from './components';
 
 interface IAppComponentProps {
     store: Store<IAppState>
@@ -43,6 +43,7 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
                     <h1>TODO LIST<br/><small>REACT+REDUX</small></h1>
                 </header>
                 <main>
+                    <AddItem itemType="TodoList" />
                     <ul className="todo-lists-list">
                         {this.lists.map(list => (
                             <li className={this.listClassName(list, this.currentId)} key={list.id}>
@@ -50,9 +51,7 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
                                 {list.id !== this.currentId ? (
                                     <ul className="todo-list">
                                         {list.todos.map(todo => (
-                                        <li className={this.todoClassName(todo)} key={todo.id}>
-                                                {todo.text}
-                                        </li>
+                                        <li className={this.todoClassName(todo)} key={todo.id}>{todo.text}</li>
                                         ))}
                                     </ul>
                                     ) : (
@@ -63,7 +62,7 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
                                             <FilterLink filterType="Active"/>
                                             <FilterLink filterType="Completed"/>
                                         </filters>
-                                        <p> current filter is {this.filter}</p>
+                                        <AddItem itemType="Todo" />
                                         <TodoList todos={list.todos} filter={this.filter} />
                                     </div>
                                     )}

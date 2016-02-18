@@ -228,6 +228,7 @@ declare namespace monet {
     }
 
     class IO<T> implements Monad<T> {
+        constructor(fn: () => T);
         bind<V>(fn: (val: T) => IO<V>): IO<V>;
         flatMap<V>(fn: (val: T) => IO<V>): IO<V>;
         chain<V>(fn: (val: T) => IO<V>): IO<V>;
