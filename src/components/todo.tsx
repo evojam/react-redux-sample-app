@@ -27,11 +27,13 @@ export class Todo extends Component<ITodoProps, {}> {
 
     public render(): JSX.Element {
         return (
-            <li className={this.props.todo.completed ? 'done' : undefined}>
+            <li className={'todo' + (this.props.todo.completed ? ' done' : '')}>
                 <button onClick={this.getToggleAction(this.props.todo)} className="toggle">
                     {this.props.todo.text}
                 </button>
-                <button onClick={this.getRemoveAction(this.props.todo)} className="remove ion">x</button>
+                <button onClick={this.getRemoveAction(this.props.todo)} className="remove ion">
+                    <span>Remove</span>
+                </button>
             </li>
         );
     }

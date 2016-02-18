@@ -47,8 +47,10 @@ declare module JSX {
 
     interface IntrinsicElements {
         'add-item': __React.HTMLProps<HTMLElement>;
+        'editable-list': __React.HTMLProps<HTMLElement>;
         'filters': __React.HTMLProps<HTMLElement>;
         'filter-link': __React.HTMLProps<HTMLElement>;
     }
 
 }
+

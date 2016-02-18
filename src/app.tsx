@@ -27,8 +27,8 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
         return this.props.store.getState().currentListId;
     }
 
-    private listClassName(list: ITodoList, id: string): string {
-        return `todo-lists-list-item ${ list.id === id ? 'active' : '' }`;
+    private listClassName(list: ITodoList): string {
+        return `todo-lists-list-item ${ list.id === this.currentId ? 'active' : '' }`;
     }
 
     private todoClassName(todo: ITodo): string {
@@ -36,7 +36,6 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
     }
 
     public render(): JSX.Element {
-        console.log('App RENDER');
         return (
             <div>
                 <header>
@@ -46,7 +45,7 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
                     <AddItem itemType="TodoList" />
                     <ul className="todo-lists-list">
                         {this.lists.map(list => (
-                            <li className={this.listClassName(list, this.currentId)} key={list.id}>
+                            <li className={this.listClassName(list)} key={list.id}>
                                 <TodoListHeader todoList={list} />
                                 {list.id !== this.currentId ? (
                                     <ul className="todo-list">
@@ -55,7 +54,7 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
                                         ))}
                                     </ul>
                                     ) : (
-                                    <div>
+                                    <editable-list>
                                         <filters>
                                             Show:
                                             <FilterLink filterType="All"/>
@@ -64,7 +63,7 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
                                         </filters>
                                         <AddItem itemType="Todo" />
                                         <TodoList todos={list.todos} filter={this.filter} />
-                                    </div>
+                                    </editable-list>
                                     )}
                             </li>
                         ))}

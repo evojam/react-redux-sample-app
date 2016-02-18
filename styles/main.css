@@ -1,0 +1,228 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: sans-serif;
+}
+
+button, input {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+my-app {
+    margin: 0 auto;
+    max-width: 90%;
+    width: 960px;
+}
+
+add-item,
+filters,
+my-app,
+todo-list {
+    display: block;
+}
+
+.todo-lists-list {
+    align-items: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0;
+}
+
+.todo-lists-list-item {
+    background-color: rgba(170, 221, 17, .1);
+    border: 1px dashed #ddd;
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    width: 49%;
+}
+
+.todo-lists-list-item.active {
+    background-color: rgba(170, 221, 17, .4);
+}
+
+.todo-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.todo-preview {
+    display: block;
+}
+
+add-item,
+.todo {
+    display: flex;
+}
+
+add-item[itemtype=Todo] button,
+add-item[itemtype=Todo] input,
+.todo-preview,
+.todo button {
+    border: 0;
+    border-bottom: 1px dashed rgba(221, 170, 17, .8);
+    display: block;
+    font-size: 1rem;
+    line-height: 2rem;
+    margin: 0;
+    outline: none;
+    padding: 5px 20px;
+}
+
+.todo button span {
+    display: none;
+}
+
+add-item[itemtype=Todo] input,
+.todo-preview:first-child {
+    border-top: 1px dashed rgba(221, 170, 17, .8);
+}
+
+add-item[itemtype=Todo] button span {
+    display: none;
+}
+
+add-item[itemtype=Todo] input {
+    background-color: rgba(255, 255, 220, .8);
+    box-shadow: inset 0 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.todo .toggle {
+    background-color: rgba(221, 170, 17, .2);
+}
+
+.todo .toggle:hover {
+    background-color: rgba(221, 170, 17, .3);
+}
+
+add-item[itemtype=Todo] input,
+.todo .toggle {
+    text-align: left;
+    width: calc(100% - 2em - 10px);
+}
+
+add-item[itemtype=Todo] button,
+.todo .remove {
+    background-color: transparent;
+    border: 0;
+    font-size: 1.5rem;
+    padding: 5px;
+    text-align: center;
+    width: calc(2em + 10px);
+}
+
+add-item[itemtype=Todo] button {
+    display: block;
+}
+
+
+
+add-item[itemtype=Todo] button:before {
+    color: rgba(110, 221, 10, .6);
+    content: "\f216";
+    font-weight: 700;
+}
+
+add-item[itemtype=Todo] button:hover:before {
+    color: rgb(110, 221, 10);
+}
+
+.todo .remove:before {
+    color: rgba(221, 110, 10, .6);
+    content: "\f207";
+    font-weight: 700;
+}
+
+.todo .remove:hover:before {
+    color: rgb(221, 110, 10);
+}
+
+.todo-preview.done,
+.todo.done {
+    opacity: .4;
+}
+
+.todo-preview.done,
+.todo.done .toggle {
+    text-decoration: line-through;
+}
+
+.todo.done .toggle {
+    background-color: #ddd;
+}
+
+filters {
+    margin-bottom: 15px;
+}
+
+.todo-list-item-header {
+    display: flex;
+    margin-bottom: 1.5rem;
+}
+
+.todo-list-item-header > * {
+    line-height: 3rem;
+}
+
+.todo-list-item-header h2 {
+    flex: 1;
+    margin: 0;
+}
+
+.todo-list-item-header button {
+    background-color: transparent;
+    border: 0;
+    color: rgba(90, 180, 7, .6);
+    font-size: 2rem;
+    margin: 0;
+    outline: none;
+    padding: 0;
+    width: 3rem
+}
+
+.todo-list-item-header button:hover {
+    color: rgba(90, 180, 7, .95);
+    text-shadow: 0 0 3px #fff;
+}
+
+.todo-list-item-header button span {
+    display: none;
+}
+
+.todo-list-item-header .cancel:before {
+    content: "\f12a";
+}
+
+.todo-list-item-header .edit:before {
+    content: "\f2bf";
+}
+
+.todo-list-item-header .remove:before {
+    content: "\f252";
+}
+
+.todo-list-item-header .edit {
+    display: block;
+}
+
+.todo-list-item-header .cancel,
+.todo-list-item-header .remove {
+    display: none;
+}
+
+.active .todo-list-item-header .edit {
+    display: none;
+}
+
+.active .todo-list-item-header .cancel,
+.active .todo-list-item-header .remove {
+    display: block;
+}

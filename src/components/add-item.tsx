@@ -53,7 +53,8 @@ export class AddItem extends Component<IAddItemProps, {}> {
 
     public render(): JSX.Element {
         return (
-            <add-item>
+            // FIXME: Property 'itemtype' is missing in type 'HTMLProps<HTMLElement>'.
+            <add-item itemtype={this.props.itemType}>
                 <input ref="input" type="text" onKeyUp={this.getKeyEnterHandler()} />
                 <button onClick={this.getClickHandler()} className="ion">
                     <span>Add {this.itemTypeText}</span>
