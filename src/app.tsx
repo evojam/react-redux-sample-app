@@ -5,7 +5,7 @@ import { Store, IUnsubscribe } from 'redux';
 import { IAppState } from '../todo-lib/redux/core';
 import { ITodo, ITodoList } from '../todo-lib/dto';
 import { FilterType } from '../todo-lib/filters';
-import { TodoListHeader } from './components';
+import { TodoListHeader, FilterLink } from './components';
 
 interface IAppComponentProps {
     store: Store<IAppState>
@@ -19,9 +19,9 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
         return this.props.store.getState().todoLists;
     }
 
-    //private get filter(): FilterType {
-    //    return this.props.store.getState().currentFilter;
-    //}
+    private get filter(): FilterType {
+        return this.props.store.getState().currentFilter;
+    }
 
     private get currentId(): string {
         return this.props.store.getState().currentListId;
@@ -50,12 +50,22 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
                                 {list.id === this.currentId ? (
                                     <ul className="todo-list">
                                         {list.todos.map(todo => (
-                                            <li className={this.todoClassName(todo)} key={todo.id}>
+                                        <li className={this.todoClassName(todo)} key={todo.id}>
                                                 {todo.text}
-                                            </li>
+                                        </li>
                                         ))}
                                     </ul>
-                                ) : (<p>click edit to see</p>)}
+                                    ) : (
+                                    <div>
+                                        <filters>
+                                            Show:
+                                            <FilterLink filterType="All"/>
+                                            <FilterLink filterType="Active"/>
+                                            <FilterLink filterType="Completed"/>
+                                        </filters>
+                                        <p> current filter is {this.filter}</p>
+                                    </div>
+                                    )}
                             </li>
                         ))}
                     </ul>

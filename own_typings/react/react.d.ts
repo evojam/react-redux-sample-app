@@ -42,3 +42,12 @@ declare namespace __ReactImplementables {
 declare module "react-implementables" {
     export = __ReactImplementables;
 }
+
+declare module JSX {
+
+    interface IntrinsicElements {
+        'filters': __React.HTMLProps<HTMLElement>;
+        'filter-link': __React.HTMLProps<HTMLElement>;
+    }
+
+}
