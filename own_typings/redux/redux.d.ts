@@ -20,7 +20,8 @@ declare module Redux {
     }
 
     interface IDispatch extends Function {
-        <A extends IAction>(action: A): A;
+        <A>(action: A): A;
+        <A, B>(action: A): B;
     }
 
     interface IStoreCreator extends Function {
