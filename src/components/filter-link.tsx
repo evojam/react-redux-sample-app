@@ -10,8 +10,6 @@ interface IFilterLinkProps {
 
 export class FilterLink extends Component<IFilterLinkProps, {}> {
 
-    public props: IFilterLinkProps;
-
     private getApplyFilterAction(filterType: string) {
         return () => {
             todoActions.setFilter(FilterType[filterType]);

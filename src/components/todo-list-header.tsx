@@ -10,8 +10,6 @@ interface ITodoListHeaderProps {
 
 export class TodoListHeader extends Component<ITodoListHeaderProps, {}> {
 
-    public props: ITodoListHeaderProps;
-
     private getChooseAction(id: string) {
         return (): void => {
             todoActions.chooseTodoList(id);
@@ -20,7 +18,7 @@ export class TodoListHeader extends Component<ITodoListHeaderProps, {}> {
 
     private getRemoveAction(id: string) {
         return (): void => {
-            todoActions.chooseTodoList(id);
+            todoActions.removeTodoList(id);
         };
     }
 

@@ -11,8 +11,6 @@ interface ITodoProps {
 
 export class Todo extends Component<ITodoProps, {}> {
 
-    public props: ITodoProps;
-
     private getToggleAction(todo: ITodo) {
         return () => {
             todoActions.toggleTodo(todo.id);
