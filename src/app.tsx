@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import { OnWillUnmount, OnDidMount } from 'react-implementables'
 import { Store, IUnsubscribe } from 'redux';
-import { IAppState } from '../todo-lib/redux/core';
+import { IAppState, syncStorage } from '../todo-lib/redux/core';
 import { ITodo, ITodoList } from '../todo-lib/dto';
 import { FilterType } from '../todo-lib/filters';
 import { TodoListHeader, FilterLink, TodoList, AddItem } from './components';
@@ -77,7 +77,10 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
 
     public componentDidMount(): void {
         this.forceUpdate();
-        this.unsubscribe = this.props.store.subscribe(() => this.forceUpdate());
+        this.unsubscribe = this.props.store.subscribe(() => {
+            this.forceUpdate();
+            syncStorage(this.props.store.getState());
+        });
     }
 
     public componentWillUnmount(): void {
