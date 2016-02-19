@@ -1,16 +1,21 @@
 import * as React from 'react';
 import { Component, MouseEvent, KeyboardEvent, EventHandler } from 'react';
+import { OnDidMount } from 'react-implementables';
 
 import { ITodo } from '../../todo-lib/dto';
 import { todoActions } from '../services/todo-actions';
 import { AddItemType } from '../../todo-lib/redux/actions';
 import { Maybe, Some, IO } from 'monet';
 
+function ioNoop() {
+    return IO(() => {});
+}
+
 interface IAddItemProps {
     itemType: string;
 }
 
-export class AddItem extends Component<IAddItemProps, {}> {
+export class AddItem extends Component<IAddItemProps, {}> implements OnDidMount {
 
     private get itemTypeText(): string {
         return this.props.itemType.replace(/([a-z])([A-Z])/g, '$1 $2');
@@ -32,7 +37,7 @@ export class AddItem extends Component<IAddItemProps, {}> {
         return input.filter(input => Boolean(input.value)).map(input => IO(() => {
             todoActions.addItem(AddItemType[this.props.itemType], input.value);
             input.value = ''; // FIXME: SideEffect - maybe move to store ?
-        })).orJust(IO(() => {})).run();
+        })).orJust(ioNoop()).run();
     }
 
     private getClickHandler(): EventHandler<MouseEvent> {
@@ -45,6 +50,12 @@ export class AddItem extends Component<IAddItemProps, {}> {
         return (event: KeyboardEvent): void => {
             this.addItem(Some(event).filter(this.isEnterEvent).flatMap(() => this.inputRef));
         }
+    }
+
+    componentDidMount(): void {
+        this.inputRef.filter(() => this.props.itemType === 'Todo').map(input => IO(() => {
+            input.focus();
+        })).orJust(ioNoop()).run();
     }
 
     public render(): JSX.Element {
