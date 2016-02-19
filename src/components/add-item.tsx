@@ -10,56 +10,51 @@ interface IAddItemProps {
     itemType: string;
 }
 
-interface IAddItemRefs {
-    [key: string]: HTMLInputElement;
-    //'input': HTMLInputElement;
-}
-
 export class AddItem extends Component<IAddItemProps, {}> {
-
-    public props: IAddItemProps;
-    public refs: IAddItemRefs;
 
     private get itemTypeText(): string {
         return this.props.itemType.replace(/([a-z])([A-Z])/g, '$1 $2');
     }
 
-    private getInputRef() {
-        return Maybe.fromNull(this.refs['input']);
+    private get itemTypeClass(): string {
+        return `add-item add-${this.itemTypeText.toLowerCase().replace(' ', '-')}`;
+    }
+
+    private get inputRef(): Maybe<HTMLInputElement> {
+        return Maybe.fromNull(this.refs['input'] as HTMLInputElement);
     }
 
     private isEnterEvent(event: KeyboardEvent) {
         return event.keyCode === 13 || event.which === 13;
     }
 
-    private addItem(input: Maybe<HTMLInputElement>): IO<void> {
-        return input.filter(input => Boolean(input.value)).cata(() => new IO(() => {}), input => new IO(() => {
+    private addItem(input: Maybe<HTMLInputElement>): void {
+        return input.filter(input => Boolean(input.value)).map(input => IO(() => {
             todoActions.addItem(AddItemType[this.props.itemType], input.value);
             input.value = ''; // FIXME: SideEffect - maybe move to store ?
-        }));
+        })).orJust(IO(() => {})).run();
     }
 
     private getClickHandler(): EventHandler<MouseEvent> {
         return (): void => {
-            this.addItem(this.getInputRef()).run();
+            this.addItem(this.inputRef);
         }
     }
 
     private getKeyEnterHandler(): EventHandler<KeyboardEvent> {
         return (event: KeyboardEvent): void => {
-            this.addItem(Some(event).filter(this.isEnterEvent).flatMap(() => this.getInputRef())).run();
+            this.addItem(Some(event).filter(this.isEnterEvent).flatMap(() => this.inputRef));
         }
     }
 
     public render(): JSX.Element {
         return (
-            // FIXME: Property 'itemtype' is missing in type 'HTMLProps<HTMLElement>'.
-            <add-item itemtype={this.props.itemType}>
+            <div className={this.itemTypeClass}>
                 <input ref="input" type="text" onKeyUp={this.getKeyEnterHandler()} />
                 <button onClick={this.getClickHandler()} className="ion">
                     <span>Add {this.itemTypeText}</span>
                 </button>
-            </add-item>
+            </div>
         );
     }
 

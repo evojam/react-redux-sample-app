@@ -9,6 +9,7 @@ var typescript = require('gulp-typescript');
 gulp.task('ts-build-app', () => gulp.src([
     'typings/tsd.d.ts',
     'own_typings/**/*.d.ts',
+    'todo-lib/own_typings/**/*.d.ts',
     'src/**/*.{ts,tsx}',
     'node_modules/reflect-metadata/reflect-metadata.d.ts'
 ]).pipe(typescript({
