@@ -1,38 +1,33 @@
 import * as React from 'react';
 import { Component } from 'react';
-import { OnWillUnmount, OnDidMount } from 'react-implementables'
 import { Store, IUnsubscribe } from 'redux';
+import { OnWillUnmount, OnDidMount } from 'react-implementables'
+import { Maybe } from 'monet';
+
 import { IAppState, syncStorage } from '../todo-lib/redux/core';
-import { ITodo, ITodoList } from '../todo-lib/dto';
-import { FilterType } from '../todo-lib/filters';
-import { TodoListHeader, EditableList, AddItem } from './components';
+
+import { AddItem, ListOfLists } from './components';
 
 interface IAppComponentProps {
     store: Store<IAppState>
 }
 
-export class App extends Component<IAppComponentProps, {}> implements OnDidMount, OnWillUnmount {
+export class App extends Component<IAppComponentProps, IAppState> implements OnDidMount, OnWillUnmount {
 
-    public props: IAppComponentProps;
-
-    private get lists(): ITodoList[] {
-        return this.props.store.getState().todoLists;
+    private get appState(): Maybe<IAppState> {
+        return Maybe.fromNull(this.state);
     }
 
-    private get filter(): FilterType {
-        return this.props.store.getState().currentFilter;
+    private get currentId() {
+        return this.appState.cata(() => null, state => state.currentListId);
     }
 
-    private get currentId(): string {
-        return this.props.store.getState().currentListId;
+    private get filter() {
+        return this.appState.cata(() => null, state => state.currentFilter);
     }
 
-    private listClassName(list: ITodoList): string {
-        return `todo-lists-list-item ${ list.id === this.currentId ? 'active' : '' }`;
-    }
-
-    private todoClassName(todo: ITodo): string {
-        return `todo-preview ${ todo.completed ? 'done' : '' }`;
+    private get lists() {
+        return this.appState.map(state => state.todoLists).orJust([]);
     }
 
     public render(): JSX.Element {
@@ -43,28 +38,10 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
                 </header>
                 <main>
                     <AddItem itemType="TodoList" />
-                    <ul className="todo-lists-list">
-                        {this.lists.map(list => (
-                            <li className={this.listClassName(list)} key={list.id}>
-                                <TodoListHeader todoList={list} />
-
-                                {list.id !== this.currentId ? (
-
-                                    <ul className="todo-list">
-                                        {list.todos.map(todo => (
-                                        <li className={this.todoClassName(todo)} key={todo.id}>{todo.text}</li>
-                                        ))}
-                                    </ul>
-
-                                ) : (
-
-                                    <EditableList todoList={list} filter={this.filter}/>
-
-                                )}
-
-                            </li>
-                        ))}
-                    </ul>
+                    <ListOfLists
+                        currentId={this.currentId}
+                        filter={this.filter}
+                        lists={this.lists}/>
                 </main>
             </div>
         );
@@ -72,12 +49,16 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
 
     private unsubscribe: IUnsubscribe;
 
-    public componentDidMount(): void {
-        this.forceUpdate();
-        this.unsubscribe = this.props.store.subscribe(() => {
-            this.forceUpdate();
-            syncStorage(this.props.store.getState());
+    private sync(): void {
+        const newState = this.props.store.getState();
+        this.setState(newState, () => {
+            syncStorage(newState);
         });
+    }
+
+    public componentDidMount(): void {
+        this.sync();
+        this.unsubscribe = this.props.store.subscribe(() => this.sync());
     }
 
     public componentWillUnmount(): void {
