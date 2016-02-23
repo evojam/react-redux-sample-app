@@ -10,6 +10,11 @@ interface ITodoListHeaderProps {
 
 export class TodoListHeader extends Component<ITodoListHeaderProps, {}> {
 
+    constructor() {
+        super();
+        console.log('new TodoListHeader()');
+    }
+
     private getChooseAction(id: string) {
         return (): void => {
             todoActions.chooseTodoList(id);

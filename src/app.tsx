@@ -5,7 +5,7 @@ import { Store, IUnsubscribe } from 'redux';
 import { IAppState, syncStorage } from '../todo-lib/redux/core';
 import { ITodo, ITodoList } from '../todo-lib/dto';
 import { FilterType } from '../todo-lib/filters';
-import { TodoListHeader, FilterLink, TodoList, AddItem } from './components';
+import { TodoListHeader, EditableList, AddItem } from './components';
 
 interface IAppComponentProps {
     store: Store<IAppState>
@@ -47,24 +47,21 @@ export class App extends Component<IAppComponentProps, {}> implements OnDidMount
                         {this.lists.map(list => (
                             <li className={this.listClassName(list)} key={list.id}>
                                 <TodoListHeader todoList={list} />
+
                                 {list.id !== this.currentId ? (
+
                                     <ul className="todo-list">
                                         {list.todos.map(todo => (
                                         <li className={this.todoClassName(todo)} key={todo.id}>{todo.text}</li>
                                         ))}
                                     </ul>
-                                    ) : (
-                                    <editable-list>
-                                        <filters>
-                                            Show:
-                                            <FilterLink filterType="All"/>
-                                            <FilterLink filterType="Active"/>
-                                            <FilterLink filterType="Completed"/>
-                                        </filters>
-                                        <AddItem itemType="Todo" />
-                                        <TodoList todos={list.todos} filter={this.filter} />
-                                    </editable-list>
-                                    )}
+
+                                ) : (
+
+                                    <EditableList todoList={list} filter={this.filter}/>
+
+                                )}
+
                             </li>
                         ))}
                     </ul>

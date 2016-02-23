@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Component } from 'react'; // , Factory
+import { Component } from 'react';
 
 import { FilterType, todosFilter } from '../../todo-lib/filters';
 import { ITodo } from '../../todo-lib/dto';
@@ -24,8 +24,10 @@ export class TodoList extends Component<ITodoListProps, {}> {
 }
 
 // FIXME: Below functional version works well but does not compile
-//export const TodoList: Factory<ITodoListProps> = (props: ITodoListProps) => (
-//    <ul className="todo-list">
-//        {todosFilter(props.todos, props.filter).map(todo => <Todo todo={todo} key={todo.id} />)}
-//    </ul>
-//);
+//export function TodoList(props: ITodoListProps) {
+//    return (
+//        <ul className="todo-list">
+//            {todosFilter(props.todos, props.filter).map(todo => <Todo todo={todo} key={todo.id}/>)}
+//        </ul>
+//    );
+//}

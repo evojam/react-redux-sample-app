@@ -17,6 +17,11 @@ interface IAddItemProps {
 
 export class AddItem extends Component<IAddItemProps, {}> implements OnDidMount {
 
+    constructor() {
+        super();
+        console.log('new AddItem()');
+    }
+
     private get itemTypeText(): string {
         return this.props.itemType.replace(/([a-z])([A-Z])/g, '$1 $2');
     }
