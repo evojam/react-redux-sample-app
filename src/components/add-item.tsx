@@ -57,7 +57,7 @@ export class AddItem extends Component<IAddItemProps, {}> implements OnDidMount 
         }
     }
 
-    componentDidMount(): void {
+    public componentDidMount(): void {
         this.inputRef.filter(() => this.props.itemType === 'Todo').map(input => IO(() => {
             input.focus();
         })).orJust(ioNoop()).run();

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-import { Store, IUnsubscribe } from 'redux';
+import { Store, Unsubscribe } from 'redux';
 import { OnWillUnmount, OnDidMount } from 'react-implementables'
 import { Maybe } from 'monet';
 
@@ -47,7 +47,7 @@ export class App extends Component<IAppComponentProps, IAppState> implements OnD
         );
     }
 
-    private unsubscribe: IUnsubscribe;
+    private unsubscribe: Unsubscribe;
 
     private sync(): void {
         const newState = this.props.store.getState();
