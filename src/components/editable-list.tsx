@@ -24,7 +24,7 @@ export class EditableList extends Component<IEditableListProps, {}> {
                     <FilterLink filterType="Completed"/>
                 </filters>
                 <AddItem itemType="Todo"/>
-                <TodoList todos={this.props.todoList.todos} filter={this.props.filter}/>
+                <TodoList todoList={this.props.todoList.todos} filter={this.props.filter}/>
             </editable-list>
         );
     }

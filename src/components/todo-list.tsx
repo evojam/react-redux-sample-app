@@ -7,7 +7,7 @@ import { ITodo } from '../../todo-lib/dto';
 import { Todo } from './todo';
 
 interface ITodoListProps {
-    todos: ITodo[];
+    todoList: ITodo[];
     filter: FilterType;
 }
 
@@ -16,7 +16,7 @@ export class TodoList extends Component<ITodoListProps, {}> {
     public render(): JSX.Element {
         return (
             <ul className="todo-list">
-                {todosFilter(this.props.todos, this.props.filter).map(todo => <Todo todo={todo} key={todo.id} />)}
+                {todosFilter(this.props.todoList, this.props.filter).map(todo => <Todo todo={todo} key={todo.id} />)}
             </ul>
         );
     }
@@ -24,10 +24,10 @@ export class TodoList extends Component<ITodoListProps, {}> {
 }
 
 // FIXME: Below functional version works well but does not compile
-//export function TodoList(props: ITodoListProps) {
+//export function TodoList(props: ITodoListProps): JSX.Element {
 //    return (
 //        <ul className="todo-list">
-//            {todosFilter(props.todos, props.filter).map(todo => <Todo todo={todo} key={todo.id}/>)}
+//            {todosFilter(props.todoList, props.filter).map(todo => <Todo todo={todo} key={todo.id}/>)}
 //        </ul>
 //    );
 //}

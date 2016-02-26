@@ -27,15 +27,23 @@ export class ListOfLists extends Component<IListOfListsProps, {}> {
         return (
             <ul className="todo-lists-list">
                 {this.props.lists.map(list => (
-                <li className={this.listClassName(list)} key={list.id}>
+                <li key={list.id}
+                    className={this.listClassName(list)}>
                     <TodoListHeader todoList={list}/>
                     {list.id !== this.props.currentId ? (
-                        <ul className="todo-list">
-                            {list.todos.map(todo => (
-                                <li className={this.todoClassName(todo)} key={todo.id}>{todo.text}</li>
-                            ))}
-                        </ul>
-                    ) : <EditableList todoList={list} filter={this.props.filter}/>}
+                    <ul className="todo-list">
+                        {list.todos.map(todo => (
+                            <li key={todo.id}
+                                className={this.todoClassName(todo)}>
+                                {todo.text}
+                            </li>
+                        ))}
+                    </ul>
+                    ) : (
+                    <EditableList
+                        todoList={list}
+                        filter={this.props.filter}/>
+                    )}
                 </li>
                 ))}
             </ul>
